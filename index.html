@@ -1,0 +1,1175 @@
+<html>
+  <head>
+    <title>Bela Blok</title>
+
+    <!-- Several Font Awesome icons were used, license link: https://fontawesome.com/license  -->
+    <!-- The icons were modified: SVG attributes data-prefix, data-icon, class, and role were -->
+    <!-- removed, 'class="icon"' attribute was added. -->
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20xml:space='preserve'%20viewBox='0%200%20100%20100'%3E%3Cstyle%3E.font%7Bfont:%208px%20sans-serif;fill:red;%7D%3C/style%3E%3Crect%20x='20'%20y='0'%20width='60'%20height='100'%20fill='white'%20stroke='none'/%3E%3Cpath%20d='M%2050%2062.5%20A%2050%2050%200%200%201%2040%2050%20A%201%201%200%200%201%2050%2045%20A%201%201%200%200%201%2060%2050%20A%2050%2050%200%200%201%2050%2062.5%20Z'%20stroke='none'%20fill='red'/%3E%3Cpath%20d='M%2050%2062.5%20A%2050%2050%200%200%201%2040%2050%20A%201%201%200%200%201%2050%2045%20A%201%201%200%200%201%2060%2050%20A%2050%2050%200%200%201%2050%2062.5%20Z'%20stroke='none'%20fill='red'%20transform='scale(0.25,0.25)%20translate(-100,-150)'%20transform-origin='center'/%3E%3Cpath%20d='M%2050%2062.5%20A%2050%2050%200%200%201%2040%2050%20A%201%201%200%200%201%2050%2045%20A%201%201%200%200%201%2060%2050%20A%2050%2050%200%200%201%2050%2062.5%20Z'%20stroke='none'%20fill='red'%20transform='scale(-0.25,-0.25)%20translate(-100,-150)'%20transform-origin='center'/%3E%3Ctext%20x='22.5'%20y='8'%20class='font'%3EA%3C/text%3E%3Ctext%20x='22.5'%20y='8'%20class='font'%20transform='scale(-1,-1)'%20transform-origin='center'%3EA%3C/text%3E%3C/svg%3E%0A"
+    />
+
+    <style>
+      html {
+        font-size: 8vh;
+        font-family: sans-serif;
+      }
+
+      body {
+        margin: 0;
+      }
+
+      table {
+        table-layout: fixed;
+        text-align: center;
+        border-collapse: collapse;
+        padding: 0;
+      }
+
+      .full-size-font {
+        font-size: 1rem;
+      }
+
+      .show-options-button {
+        width: 100%;
+        height: 5%;
+        background: #004d23;
+        color: #ffffff;
+        font-size: 0.5rem;
+        text-align: center;
+      }
+
+      .history {
+        width: 100%;
+        height: 55%;
+        overflow-y: scroll;
+        overflow-x: hidden;
+      }
+
+      .history-cell {
+        background: #004d23;
+        color: #ffffff;
+        border-top: 0.25vh solid white;
+      }
+
+      .total-points {
+        font-size: 1.25rem;
+        color: #761318;
+      }
+
+      .total-points-small {
+        font-size: 0.9rem;
+      }
+
+      .new-game {
+        width: 100%;
+        height: 20%;
+        background: #004d23;
+        color: #ffffff;
+        text-align: center;
+        vertical-align: center;
+        font-size: 1.75rem;
+      }
+
+      .points {
+        text-align: right;
+        color: #761318;
+      }
+
+      .contract {
+        text-align: right;
+        color: #004d23;
+      }
+
+      .team-name {
+        font-size: 0.6rem;
+      }
+
+      .team-wins {
+        font-size: 0.4rem;
+        color: #004d23;
+      }
+
+      .point-diff {
+        font-size: 0.3rem;
+        color: #004d23;
+      }
+
+      .leader {
+        background: #004d23;
+        color: #ffffff;
+      }
+
+      .selected {
+        background: #a8cdaa;
+      }
+
+      .accept-button {
+        background: #004d23;
+        color: #ffffff;
+      }
+
+      .cancel-button {
+        background: #761318;
+        color: #ffffff;
+      }
+
+      .bottom-green-border {
+        border-bottom: 1.5vh solid #004d23;
+      }
+
+      .number-cell {
+        border-collapse: collapse;
+        border-top: 0.8vh solid black;
+        border-bottom: 0.8vh solid black;
+        border-left: 0.8vh solid black;
+        border-right: 0.8vh solid black;
+        background-image: linear-gradient(white, lightgray);
+      }
+
+      .icon {
+        width: 8vh;
+        height: 8vh;
+      }
+
+      .small-icon {
+        width: 3vh;
+        height: 5vh;
+      }
+
+      .options-header {
+        width: 100%;
+        height: 15%;
+        background: #ffffff;
+        color: #004d23;
+        text-align: center;
+        vertical-align: center;
+        font-size: 1rem;
+      }
+
+      .options-button {
+        width: 100%;
+        height: 15%;
+        background: #004d23;
+        color: #ffffff;
+        text-align: center;
+        vertical-align: center;
+        font-size: 0.5rem;
+      }
+
+      .options-divider {
+        width: 100%;
+        height: 2.5%;
+        background: #ffffff;
+      }
+
+      .options-filler {
+        width: 100%;
+        height: 10%;
+        background: #ffffff;
+      }
+
+      /* Zelena boja za "dealera" */
+      .dealer {
+        background-color: #00b300 !important;
+      }
+
+      #player-name-edit {
+        display: none;
+        position: absolute;
+        top: 100px; /* umjesto bottom:100% */
+        left: 10px;
+        width: 80%; /* umjesto right:0 */
+        background: #fff;
+        border: 1px solid #ccc;
+        text-align: center;
+        z-index: 9999;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="overview">
+      <div class="show-options-button" onclick="showOptions();">
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          class="small-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 300 512"
+        >
+          <circle cx="150" cy="256" r="80" fill="currentColor"></circle>
+        </svg>
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          class="small-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 300 512"
+        >
+          <circle cx="150" cy="256" r="80" fill="currentColor"></circle>
+        </svg>
+        <svg
+          aria-hidden="true"
+          focusable="false"
+          class="small-icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 300 512"
+        >
+          <circle cx="150" cy="256" r="80" fill="currentColor"></circle>
+        </svg>
+      </div>
+      <div id="history-div" class="history">
+        <table id="history-table" width="100%" class="full-size-font">
+          <tbody>
+            <tr id="game-0" class="history-cell" onclick="editGame(0);">
+              <td>120</td>
+              <td>62</td>
+            </tr>
+            <tr id="game-1" class="history-cell" onclick="editGame(1);">
+              <td>50</td>
+              <td>112</td>
+            </tr>
+            <tr id="game-2" class="history-cell" onclick="editGame(2);">
+              <td>89</td>
+              <td>73</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <table width="100%" height="20%" class="full-size-font">
+        <tbody>
+          <tr>
+            <td id="us-total" colspan="8" class="total-points">259</td>
+            <td id="them-total" colspan="8" class="total-points">247</td>
+          </tr>
+          <tr>
+            <td id="us-missing" colspan="5" class="point-diff">742</td>
+            <td id="team-diff" colspan="6" class="point-diff">12</td>
+            <td id="them-missing" colspan="5" class="point-diff">754</td>
+          </tr>
+          <!-- OVDJE JE ZAMIJENJEN REDAK: UMJESTO 'MI' I 'VI' DODAJEMO 4 IGRAČA -->
+
+          <!-- MI ekipa: 1 Kiki, 3 Pepo -->
+          <tr>
+            <td id="us-wins" colspan="3" rowspan="2" class="team-wins">0</td>
+
+            <td
+              colspan="5"
+              class="team-name"
+              id="player-1"
+              style="font-size: 0.4rem"
+              onclick="selectDealer(1); editPlayerName(1);"
+            >
+              1 Kiki
+            </td>
+
+            <td
+              colspan="5"
+              class="team-name"
+              id="player-2"
+              style="font-size: 0.4rem"
+              onclick="selectDealer(2); editPlayerName(2);"
+            >
+              2 Fio
+            </td>
+
+            <td id="them-wins" colspan="3" rowspan="2" class="team-wins">0</td>
+          </tr>
+
+          <!-- Donji redak: 3 Pepo (lijevo), 4 Juzo (desno) -->
+          <tr>
+            <td
+              colspan="5"
+              class="team-name"
+              id="player-3"
+              style="font-size: 0.4rem"
+              onclick="selectDealer(3); editPlayerName(3);"
+            >
+              3 Pepo
+            </td>
+
+            <td
+              colspan="5"
+              class="team-name"
+              id="player-4"
+              style="font-size: 0.4rem"
+              onclick="selectDealer(4); editPlayerName(4);"
+            >
+              4 Juzo
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="new-game" onclick="newGame();">
+        <tbody>
+          <tr>
+            <td>Nova</td>
+          </tr>
+        </tbody>
+      </table>
+      <!-- NOVI DIV ZA "DROP-UP" I UNOS IMENA -->
+      <div
+        id="player-name-edit"
+        style="
+          display: none;
+          position: absolute;
+          bottom: 100%;
+          left: 0;
+          right: 0;
+          background: #fff;
+          border: 1px solid #ccc;
+          text-align: center;
+          z-index: 9999;
+        "
+      >
+        <!-- Padajući (drop-up) popis -->
+        <select
+          id="player-name-select"
+          size="8"
+          style="font-size: 0.5rem; margin: 0.5rem auto; display: block"
+          onchange="onPlayerNameSelected();"
+        >
+          <option value="">[Unesi ime]</option>
+          <option value="Fio">Fio</option>
+          <option value="Juzo">Juzo</option>
+          <option value="Kiki">Kiki</option>
+          <option value="Pepo">Pepo</option>
+          <option value="Z">Z</option>
+          <option value="Mlinćek">Mlinćek</option>
+          <option value="Zumbo">Zumbo</option>
+          <option value="Tomo">Tomo</option>
+        </select>
+
+        <!-- Tekstualni input za custom ime -->
+        <input
+          type="text"
+          id="player-name-input"
+          placeholder="Upiši ime..."
+          style="
+            font-size: 0.5rem;
+            width: 80%;
+            margin: 0.3rem auto;
+            display: block;
+          "
+          onblur="onPlayerNameCustom();"
+          onkeydown="onPlayerNameKey(event);"
+        />
+      </div>
+    </div>
+    <div id="options" hidden="">
+      <table class="options-header">
+        <tbody>
+          <tr>
+            <td>Postavke</td>
+          </tr>
+        </tbody>
+      </table>
+      <table class="options-button" onclick="stagePointReset();">
+        <tbody>
+          <tr>
+            <td>Resetiraj igru</td>
+          </tr>
+          <tr>
+            <td id="options-points">[0 - 0]</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="options-divider"></div>
+      <table class="options-button" onclick="stageScoreReset();">
+        <tbody>
+          <tr>
+            <td>Resetiraj rezultat</td>
+          </tr>
+          <tr>
+            <td id="options-score">[0 - 0]</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="options-divider"></div>
+      <table class="options-button">
+        <tbody>
+          <tr>
+            <td colspan="4">Igra</td>
+          </tr>
+          <tr>
+            <td id="options-target-score-301" onclick="stageTargetScore(301);">
+              301
+            </td>
+            <td id="options-target-score-501" onclick="stageTargetScore(501);">
+              501
+            </td>
+            <td id="options-target-score-701" onclick="stageTargetScore(701);">
+              701
+            </td>
+            <td
+              id="options-target-score-1001"
+              onclick="stageTargetScore(1001);"
+            >
+              1001
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="options-filler"></div>
+      <table width="100%" height="25%" class="full-size-font">
+        <tbody>
+          <tr>
+            <td class="cancel-button" onclick="cancelOptions();">
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                class="icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 352 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                ></path>
+              </svg>
+            </td>
+            <td class="accept-button" onclick="acceptOptions();">
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                class="icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
+                ></path>
+              </svg>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div id="point-entry" hidden="">
+      <table width="100%" height="26%" class="full-size-font">
+        <tbody>
+          <tr>
+            <td id="us" class="team-name">MI</td>
+            <td id="them" class="team-name">VI</td>
+          </tr>
+          <tr class="bottom-green-border">
+            <td
+              id="us-points"
+              class="points selected"
+              onclick="selectField('us-points');"
+            >
+              0
+            </td>
+            <td
+              id="them-points"
+              class="points"
+              onclick="selectField('them-points');"
+            >
+              0
+            </td>
+          </tr>
+          <tr>
+            <td
+              id="us-contract"
+              class="contract"
+              onclick="selectField('us-contract');"
+            >
+              +0
+            </td>
+            <td
+              id="them-contract"
+              class="contract"
+              onclick="selectField('them-contract');"
+            >
+              +0
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table width="100%" height="48.2%" class="full-size-font">
+        <tbody>
+          <tr>
+            <td class="number-cell" onclick="numberClick(1);">1</td>
+            <td class="number-cell" onclick="numberClick(2);">2</td>
+            <td class="number-cell" onclick="numberClick(3);">3</td>
+          </tr>
+          <tr>
+            <td class="number-cell" onclick="numberClick(4);">4</td>
+            <td class="number-cell" onclick="numberClick(5);">5</td>
+            <td class="number-cell" onclick="numberClick(6);">6</td>
+          </tr>
+          <tr>
+            <td class="number-cell" onclick="numberClick(7);">7</td>
+            <td class="number-cell" onclick="numberClick(8);">8</td>
+            <td class="number-cell" onclick="numberClick(9);">9</td>
+          </tr>
+          <tr>
+            <td class="number-cell" onclick="clearAll();">
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                class="icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 448 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M32 464a48 48 0 0 0 48 48h288a48 48 0 0 0 48-48V128H32zm272-256a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zm-96 0a16 16 0 0 1 32 0v224a16 16 0 0 1-32 0zM432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16z"
+                ></path>
+              </svg>
+            </td>
+            <td class="number-cell" onclick="numberClick(0);">0</td>
+            <td class="number-cell" onclick="backspace();">
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                class="icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 640 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M576 64H205.26A63.97 63.97 0 0 0 160 82.75L9.37 233.37c-12.5 12.5-12.5 32.76 0 45.25L160 429.25c12 12 28.28 18.75 45.25 18.75H576c35.35 0 64-28.65 64-64V128c0-35.35-28.65-64-64-64zm-84.69 254.06c6.25 6.25 6.25 16.38 0 22.63l-22.62 22.62c-6.25 6.25-16.38 6.25-22.63 0L384 301.25l-62.06 62.06c-6.25 6.25-16.38 6.25-22.63 0l-22.62-22.62c-6.25-6.25-6.25-16.38 0-22.63L338.75 256l-62.06-62.06c-6.25-6.25-6.25-16.38 0-22.63l22.62-22.62c6.25-6.25 16.38-6.25 22.63 0L384 210.75l62.06-62.06c6.25-6.25 16.38-6.25 22.63 0l22.62 22.62c6.25 6.25 6.25 16.38 0 22.63L429.25 256l62.06 62.06z"
+                ></path>
+              </svg>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      <table width="100%" height="25%" class="full-size-font">
+        <tbody>
+          <tr>
+            <td colspan="1" class="cancel-button" onclick="cancelGame();">
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                class="icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 352 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M242.72 256l100.07-100.07c12.28-12.28 12.28-32.19 0-44.48l-22.24-22.24c-12.28-12.28-32.19-12.28-44.48 0L176 189.28 75.93 89.21c-12.28-12.28-32.19-12.28-44.48 0L9.21 111.45c-12.28 12.28-12.28 32.19 0 44.48L109.28 256 9.21 356.07c-12.28 12.28-12.28 32.19 0 44.48l22.24 22.24c12.28 12.28 32.2 12.28 44.48 0L176 322.72l100.07 100.07c12.28 12.28 32.2 12.28 44.48 0l22.24-22.24c12.28-12.28 12.28-32.19 0-44.48L242.72 256z"
+                ></path>
+              </svg>
+            </td>
+            <td colspan="2" class="accept-button" onclick="saveGame();">
+              <svg
+                aria-hidden="true"
+                focusable="false"
+                class="icon"
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512"
+              >
+                <path
+                  fill="currentColor"
+                  d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
+                ></path>
+              </svg>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <script type="text/javascript">
+      /* -------------------- Original varijable (nije mijenjano) -------------------- */
+      var selectedField = 'us-points';
+      var leader = '';
+      var currentGameId = 0;
+      var pointHistory = [];
+      var targetScore = 1001;
+      var onOptionsExit = {
+        clearPoints: false,
+        clearScore: false,
+      };
+
+      /* -------------------- Novi varijable za 4 igrača i rotaciju dealer-a -------------------- */
+      var currentDealer = 0; // 1, 2, 3 ili 4 => tko miješa
+      var dealerLocked = false;
+      var dealerOrder = [1, 2, 3, 4]; // redoslijed rotacije
+
+      function selectDealer(playerId) {
+        // Ako je dealerLocked = true, ne može se mijenjati
+        if (dealerLocked) return;
+
+        // Makni .dealer svima
+        for (var pid of dealerOrder) {
+          document.getElementById('player-' + pid).classList.remove('dealer');
+        }
+        // Označi novog
+        currentDealer = playerId;
+        document.getElementById('player-' + playerId).classList.add('dealer');
+      }
+      //*********************************
+      // Kad se pozove, ide na sljedećeg u nizu (1->2->3->4->1...)
+      function moveToNextDealer() {
+        // Nađi index currentDealer u polju dealerOrder
+        var idx = dealerOrder.indexOf(currentDealer);
+        if (idx < 0) {
+          idx = 0; // ako iz nekog razloga nije postavljen, kreni od 1
+          currentDealer = dealerOrder[0];
+        }
+        // Sljedeći index
+        var nextIdx = (idx + 1) % dealerOrder.length;
+        var nextId = dealerOrder[nextIdx];
+
+        // Ukloni dealer klasu starom
+        document
+          .getElementById('player-' + currentDealer)
+          .classList.remove('dealer');
+
+        // Stavi novom
+        currentDealer = nextId;
+        document
+          .getElementById('player-' + currentDealer)
+          .classList.add('dealer');
+      }
+
+      /* -------------------- Original kod (NIJE MIJENJANO) -------------------- */
+      function selectField(id) {
+        document.getElementById(selectedField).classList.remove('selected');
+        selectedField = id;
+        document.getElementById(selectedField).classList.add('selected');
+      }
+
+      function highlightLeader() {
+        var usPoints =
+          Number(document.getElementById('us-points').innerHTML) +
+          Number(document.getElementById('us-contract').innerHTML);
+        var themPoints =
+          Number(document.getElementById('them-points').innerHTML) +
+          Number(document.getElementById('them-contract').innerHTML);
+        var us = document.getElementById('us');
+        var them = document.getElementById('them');
+
+        if (usPoints > themPoints && leader !== 'us') {
+          them.classList.remove('leader');
+          us.classList.add('leader');
+          leader = 'us';
+        } else if (themPoints > usPoints && leader !== 'them') {
+          them.classList.add('leader');
+          us.classList.remove('leader');
+          leader = 'them';
+        } else if (usPoints === themPoints && leader === 'us') {
+          us.classList.remove('leader');
+          leader = '';
+        } else if (usPoints === themPoints && leader === 'them') {
+          them.classList.remove('leader');
+          leader = '';
+        }
+      }
+
+      function setPoints(value) {
+        var v = Math.min(value, targetScore);
+
+        if (selectedField.indexOf('points') !== -1) {
+          document.getElementById(selectedField).innerHTML = v;
+          var otherValue = '' + Math.max(162 - Number(v), 0);
+
+          if (selectedField == 'us-points') {
+            document.getElementById('them-points').innerHTML = otherValue;
+          } else {
+            document.getElementById('us-points').innerHTML = otherValue;
+          }
+        } else {
+          document.getElementById(selectedField).innerHTML = '+' + v;
+        }
+
+        highlightLeader();
+      }
+
+      function numberClick(value) {
+        var currentValue = Number(
+          document.getElementById(selectedField).innerHTML
+        );
+
+        if (value === 0 && currentValue === 0) {
+          setPoints('0');
+          return;
+        }
+
+        var concat = '';
+
+        if (currentValue === 0) {
+          concat += value;
+        } else {
+          concat += currentValue;
+          concat += value;
+        }
+
+        setPoints(concat);
+      }
+
+      function backspace() {
+        var currentValue = Number(
+          document.getElementById(selectedField).innerHTML
+        );
+
+        if (currentValue === 0) {
+          return;
+        }
+
+        var reduced = '' + currentValue;
+        reduced = reduced.substring(0, reduced.length - 1);
+
+        if (reduced.length === 0) {
+          reduced = '0';
+        }
+
+        setPoints(reduced);
+      }
+
+      function clearAll() {
+        document.getElementById('us-points').innerHTML = '0';
+        document.getElementById('them-points').innerHTML = '0';
+        document.getElementById('us-contract').innerHTML = '+0';
+        document.getElementById('them-contract').innerHTML = '+0';
+        highlightLeader();
+      }
+
+      function storeState() {
+        localStorage.setItem('pointHistory', JSON.stringify(pointHistory));
+        localStorage.setItem(
+          'usWins',
+          document.getElementById('us-wins').innerHTML
+        );
+        localStorage.setItem(
+          'themWins',
+          document.getElementById('them-wins').innerHTML
+        );
+        localStorage.setItem('targetScore', targetScore);
+      }
+
+      function setPointsAndAdjustSize(id, value) {
+        var element = document.getElementById(id);
+
+        if (value < 1000) {
+          element.classList.remove('total-points-small');
+        } else if (!element.classList.contains('total-points-small')) {
+          element.classList.add('total-points-small');
+        }
+
+        element.innerHTML = String(value);
+      }
+
+      function victory(who) {
+        var elem = document.getElementById(who + '-wins');
+        elem.innerHTML = Number(elem.innerHTML) + 1;
+        currentGameId = 0;
+        pointHistory = [];
+        var table = document.getElementById('history-table');
+        table.innerHTML = '';
+        setPointsAndAdjustSize('us-total', 0);
+        setPointsAndAdjustSize('them-total', 0);
+        document.getElementById('us-missing').innerHTML = String(targetScore);
+        document.getElementById('them-missing').innerHTML = String(targetScore);
+        document.getElementById('team-diff').innerHTML = '0';
+
+        // Kada netko dosegne targetScore, partija završava:
+        // OTKLJUČAVAMO dealer, jer nova partija
+        dealerLocked = false;
+        currentDealer = 0;
+        // Ukloni .dealer svima
+        for (var pid of dealerOrder) {
+          document.getElementById('player-' + pid).classList.remove('dealer');
+        }
+      }
+
+      function updateScoreboard(usTotal, themTotal) {
+        if (usTotal > themTotal && usTotal >= targetScore) {
+          victory('us');
+        } else if (themTotal > usTotal && themTotal >= targetScore) {
+          victory('them');
+        } else {
+          setPointsAndAdjustSize('us-total', usTotal);
+          setPointsAndAdjustSize('them-total', themTotal);
+          document.getElementById('us-missing').innerHTML = String(
+            targetScore - usTotal
+          );
+          document.getElementById('them-missing').innerHTML = String(
+            targetScore - themTotal
+          );
+          document.getElementById('team-diff').innerHTML = String(
+            Math.abs(usTotal - themTotal)
+          );
+        }
+      }
+
+      function deleteGame() {
+        var table = document.getElementById('history-table');
+        table.innerHTML = '';
+
+        var newPointHistory = [];
+        var j = 0;
+        var newHtml = '';
+
+        for (var i = 0; i < pointHistory.length; i++) {
+          if (i !== currentGameId) {
+            newPointHistory.push(pointHistory[i]);
+            newHtml +=
+              '<tr id="game-' +
+              j +
+              '" class="history-cell" onclick="editGame(' +
+              j +
+              ');"><td>';
+            newHtml +=
+              pointHistory[i].us.points +
+              pointHistory[i].us.contract +
+              '</td><td>';
+            newHtml +=
+              pointHistory[i].them.points +
+              pointHistory[i].them.contract +
+              '</td></tr>\n';
+            j++;
+          }
+        }
+
+        table.innerHTML = newHtml;
+        pointHistory = newPointHistory;
+
+        var usTotal = 0;
+        var themTotal = 0;
+
+        pointHistory.forEach(function (h) {
+          usTotal += h.us.points + h.us.contract;
+          themTotal += h.them.points + h.them.contract;
+        });
+
+        setPointsAndAdjustSize('us-total', usTotal);
+        setPointsAndAdjustSize('them-total', themTotal);
+        document.getElementById('us-missing').innerHTML = String(
+          targetScore - usTotal
+        );
+        document.getElementById('them-missing').innerHTML = String(
+          targetScore - themTotal
+        );
+        document.getElementById('team-diff').innerHTML = String(
+          Math.abs(usTotal - themTotal)
+        );
+        document.getElementById('point-entry').hidden = true;
+        document.getElementById('overview').hidden = false;
+      }
+
+      function saveGame() {
+        var us = {
+          points: Number(document.getElementById('us-points').innerHTML),
+          contract: Number(document.getElementById('us-contract').innerHTML),
+        };
+        var them = {
+          points: Number(document.getElementById('them-points').innerHTML),
+          contract: Number(document.getElementById('them-contract').innerHTML),
+        };
+        var usScore = us.points + us.contract;
+        var themScore = them.points + them.contract;
+
+        if (usScore === 0 && themScore === 0) {
+          if (pointHistory.length === currentGameId) {
+            cancelGame();
+          } else {
+            deleteGame();
+            storeState();
+          }
+          return;
+        }
+
+        var table = document.getElementById('history-table');
+        var oldHtml = table.innerHTML;
+
+        if (pointHistory.length === currentGameId) {
+          table.innerHTML =
+            oldHtml +
+            '<tr id="game-' +
+            currentGameId +
+            '" class="history-cell" onclick="editGame(' +
+            currentGameId +
+            ');"><td>' +
+            usScore +
+            '</td><td>' +
+            themScore +
+            '</td></tr>\n';
+          pointHistory.push({ us: us, them: them });
+        } else {
+          document.getElementById('game-' + currentGameId).innerHTML =
+            '<td>' + usScore + '</td><td>' + themScore + '</td>';
+          pointHistory[currentGameId].us = us;
+          pointHistory[currentGameId].them = them;
+        }
+
+        // Kad se završi unos partije, "zaključavamo" dealera (ako još nije)
+        // i rotiramo na sljedećeg:
+        if (!dealerLocked && currentDealer > 0) {
+          dealerLocked = true;
+        }
+        moveToNextDealer();
+
+        var usTotal = 0;
+        var themTotal = 0;
+        pointHistory.forEach(function (h) {
+          usTotal += h.us.points + h.us.contract;
+          themTotal += h.them.points + h.them.contract;
+        });
+
+        updateScoreboard(usTotal, themTotal);
+
+        document.getElementById('point-entry').hidden = true;
+        document.getElementById('overview').hidden = false;
+
+        var historyDiv = document.getElementById('history-div');
+        historyDiv.scrollTop = historyDiv.scrollHeight;
+
+        storeState();
+      }
+
+      function editGame(gameId) {
+        currentGameId = gameId;
+        var us = pointHistory[gameId].us;
+        var them = pointHistory[gameId].them;
+        document.getElementById('us-points').innerHTML = String(us.points);
+        document.getElementById('them-points').innerHTML = String(them.points);
+        document.getElementById('us-contract').innerHTML =
+          '+' + String(us.contract);
+        document.getElementById('them-contract').innerHTML =
+          '+' + String(them.contract);
+        highlightLeader();
+        selectField('us-points');
+        document.getElementById('point-entry').hidden = false;
+        document.getElementById('overview').hidden = true;
+      }
+
+      function cancelGame() {
+        document.getElementById('point-entry').hidden = true;
+        document.getElementById('overview').hidden = false;
+      }
+
+      function newGame() {
+        currentGameId = pointHistory.length;
+        clearAll();
+        selectField('us-points');
+        document.getElementById('point-entry').hidden = false;
+        document.getElementById('overview').hidden = true;
+      }
+
+      function loadGame() {
+        pointHistory = JSON.parse(localStorage.getItem('pointHistory') || '[]');
+        currentGameId = pointHistory.length;
+        targetScore = localStorage.getItem('targetScore') || 1001;
+
+        var table = document.getElementById('history-table');
+        table.innerHTML = '';
+        var newHtml = '';
+
+        for (var i = 0; i < pointHistory.length; i++) {
+          newHtml +=
+            '<tr id="game-' +
+            i +
+            '" class="history-cell" onclick="editGame(' +
+            i +
+            ');"><td>';
+          newHtml +=
+            pointHistory[i].us.points +
+            pointHistory[i].us.contract +
+            '</td><td>';
+          newHtml +=
+            pointHistory[i].them.points +
+            pointHistory[i].them.contract +
+            '</td></tr>\n';
+        }
+
+        table.innerHTML = newHtml;
+
+        var usTotal = 0;
+        var themTotal = 0;
+
+        pointHistory.forEach(function (h) {
+          usTotal += h.us.points + h.us.contract;
+          themTotal += h.them.points + h.them.contract;
+        });
+
+        setPointsAndAdjustSize('us-total', usTotal);
+        setPointsAndAdjustSize('them-total', themTotal);
+        document.getElementById('us-missing').innerHTML = String(
+          targetScore - usTotal
+        );
+        document.getElementById('them-missing').innerHTML = String(
+          targetScore - themTotal
+        );
+        document.getElementById('team-diff').innerHTML = String(
+          Math.abs(usTotal - themTotal)
+        );
+        document.getElementById('us-wins').innerHTML =
+          localStorage.getItem('usWins') || '0';
+        document.getElementById('them-wins').innerHTML =
+          localStorage.getItem('themWins') || '0';
+      }
+
+      function showOptions() {
+        onOptionsExit = {
+          clearPoints: false,
+          clearScore: false,
+          setTargetScore: targetScore,
+        };
+
+        document.getElementById('options-points').innerHTML =
+          '[' +
+          document.getElementById('us-total').innerHTML +
+          ' - ' +
+          document.getElementById('them-total').innerHTML +
+          ']';
+        document.getElementById('options-score').innerHTML =
+          '[' +
+          document.getElementById('us-wins').innerHTML +
+          ' - ' +
+          document.getElementById('them-wins').innerHTML +
+          ']';
+        document.getElementById(
+          'options-target-score-' + targetScore
+        ).innerHTML = '[' + targetScore + ']';
+
+        document.getElementById('options').hidden = false;
+        document.getElementById('overview').hidden = true;
+      }
+
+      function stagePointReset() {
+        document.getElementById('options-points').innerHTML = '[0 - 0]';
+        onOptionsExit.clearPoints = true;
+      }
+
+      function stageScoreReset() {
+        document.getElementById('options-score').innerHTML = '[0 - 0]';
+        onOptionsExit.clearScore = true;
+      }
+
+      function stageTargetScore(newTargetScore) {
+        document.getElementById(
+          'options-target-score-' + onOptionsExit.setTargetScore
+        ).innerHTML = String(onOptionsExit.setTargetScore);
+        document.getElementById(
+          'options-target-score-' + newTargetScore
+        ).innerHTML = '[' + newTargetScore + ']';
+        onOptionsExit.setTargetScore = newTargetScore;
+      }
+
+      function cancelOptions() {
+        document.getElementById(
+          'options-target-score-' + onOptionsExit.setTargetScore
+        ).innerHTML = String(onOptionsExit.setTargetScore);
+        document.getElementById('options').hidden = true;
+        document.getElementById('overview').hidden = false;
+      }
+
+      function acceptOptions() {
+        document.getElementById(
+          'options-target-score-' + onOptionsExit.setTargetScore
+        ).innerHTML = String(onOptionsExit.setTargetScore);
+
+        if (onOptionsExit.clearPoints) {
+          currentGameId = 0;
+          pointHistory = [];
+          var table = document.getElementById('history-table');
+          table.innerHTML = '';
+          setPointsAndAdjustSize('us-total', 0);
+          setPointsAndAdjustSize('them-total', 0);
+          document.getElementById('us-missing').innerHTML = String(targetScore);
+          document.getElementById('them-missing').innerHTML =
+            String(targetScore);
+          document.getElementById('team-diff').innerHTML = '0';
+          dealerLocked = false;
+          [1, 2, 3, 4].forEach(function (pid) {
+            document.getElementById('player-' + pid).classList.remove('dealer');
+          });
+        }
+
+        if (onOptionsExit.clearScore) {
+          document.getElementById('us-wins').innerHTML = '0';
+          document.getElementById('them-wins').innerHTML = '0';
+        }
+
+        if (targetScore !== onOptionsExit.setTargetScore) {
+          targetScore = onOptionsExit.setTargetScore;
+          usTotal = Number(document.getElementById('us-total').innerHTML);
+          themTotal = Number(document.getElementById('them-total').innerHTML);
+          updateScoreboard(usTotal, themTotal);
+        }
+
+        storeState();
+
+        document.getElementById('options').hidden = true;
+        document.getElementById('overview').hidden = false;
+      }
+
+      window.onload = loadGame;
+
+      // NOVI globalni: pamtimo kojeg igrača trenutno mijenjamo
+      var currentNameEdit = 0;
+
+      // Funkcija koja se zove u <td ... onclick="selectDealer(n); editPlayerName(n)">
+      function editPlayerName(playerId) {
+        // Ako dealerLocked, NEĆEMO mijenjati ime (ili dozvoliš, po želji).
+        // Ovdje NE radimo "return", jer možda želiš moći mjenjati i kad je locked.
+        // Ako NE želiš dopustiti promjenu imena kada je locked, onda:
+        if (dealerLocked) return;
+
+        currentNameEdit = playerId;
+
+        // Pokaži "drop-up" (player-name-edit)
+        var dropUpDiv = document.getElementById('player-name-edit');
+        dropUpDiv.style.display = 'block';
+
+        // Možeš podesiti "top"/"left" da se pojavi točno iznad klika, npr.:
+        // dropUpDiv.style.top = '80px'; // test
+        // dropUpDiv.style.left = '10px';
+
+        // Reset <select> i input polja
+        document.getElementById('player-name-select').value = '';
+        document.getElementById('player-name-input').value = '';
+      }
+
+      // Kad netko odabere ime iz "drop-up" selecta
+      function onPlayerNameSelected() {
+        var sel = document.getElementById('player-name-select');
+        var chosen = sel.value;
+        if (chosen) {
+          setPlayerName(chosen);
+        }
+      }
+
+      // Kad user upiše custom ime i klikne van (blur)
+      function onPlayerNameCustom() {
+        var val = document.getElementById('player-name-input').value.trim();
+        if (val) {
+          setPlayerName(val);
+        }
+      }
+
+      // Zajednička funkcija za postavljanje novog imena
+      function setPlayerName(newName) {
+        // Postavi u HTML, npr. "1 Kiki" => "1 NovoIme"
+        var cell = document.getElementById('player-' + currentNameEdit);
+        cell.innerHTML = currentNameEdit + ' ' + newName;
+
+        // Sakrij "drop-up"
+        document.getElementById('player-name-edit').style.display = 'none';
+      }
+
+      // za enter kada dodajemo ime upisom i klik na enter
+      function onPlayerNameKey(e) {
+        // Ako je pritisnut Enter (key === "Enter" ili keyCode === 13)
+        if (e.key === 'Enter') {
+          // Uzmemo vrijednost iz input polja
+          var val = document.getElementById('player-name-input').value.trim();
+          if (val) {
+            setPlayerName(val);
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
