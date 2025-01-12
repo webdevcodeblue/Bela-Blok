@@ -756,6 +756,10 @@
         localStorage.setItem('targetScore', targetScore);
         // NOVO: sad spremamo i imena:
         localStorage.setItem('playerNames', JSON.stringify(playerNames));
+        // Spremi i status zaključanosti:
+        localStorage.setItem('dealerLocked', dealerLocked ? '1' : '0');
+        // Ako želiš i tko je trenutno dealer (ako trebaš):
+        localStorage.setItem('currentDealer', currentDealer);
       }
 
       function setPointsAndAdjustSize(id, value) {
@@ -1033,6 +1037,23 @@
           if (cell && playerNames[pid]) {
             cell.innerHTML = pid + ' ' + playerNames[pid];
           }
+        }
+        // Ucitaj status
+        const lockedVal = localStorage.getItem('dealerLocked');
+        dealerLocked = lockedVal === '1';
+
+        // Ako treba i tko je dealer:
+        const cDealerVal = localStorage.getItem('currentDealer');
+        if (cDealerVal) {
+          currentDealer = Number(cDealerVal);
+        }
+
+        // Ako je dealerLocked = true, ne možeš ponovno birati dealera ili unos imena
+        if (dealerLocked && currentDealer > 0) {
+          // Obojaj .dealer klasu
+          document
+            .getElementById('player-' + currentDealer)
+            .classList.add('dealer');
         }
       }
 
