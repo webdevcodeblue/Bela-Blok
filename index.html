@@ -1310,6 +1310,15 @@
           }
         }
       }
+      document.addEventListener(
+        'click',
+        async function autoEnableWakeLock() {
+          if (!isWakeLocked && 'wakeLock' in navigator) {
+            await toggleWakeLock();
+          }
+        },
+        { once: true }
+      );
     </script>
   </body>
 </html>
