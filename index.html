@@ -191,6 +191,22 @@
         text-align: center;
         z-index: 9999;
       }
+      /*zaslon aktiva */
+      #wakeLockBtn {
+        position: fixed; /* fiksni položaj neovisan o scrollu */
+        top: 0.1rem; /* udaljenost od vrha (prilagodi po želji) */
+        right: 0.1rem; /* udaljenost od desnog ruba */
+        z-index: 9999; /* da bude iznad ostalih elemenata */
+
+        /* Izgled gumba (manje dimenzije, prilagođeno za mob) */
+        background: #004d23; /* tamnozelena pozadina */
+        color: #fff; /* bijeli tekst */
+        font-size: 0.1em; /* manji font */
+        padding: 0.1rem 0.2rem; /* unutarnji razmak */
+        border: none;
+        border-radius: 4px; /* lagano zaobljeni rubovi */
+        cursor: pointer; /* pokazivač ruke */
+      }
     </style>
   </head>
   <body>
@@ -379,6 +395,9 @@
             <td id="options-points">[0 - 0]</td>
           </tr>
         </tbody>
+        <button id="wakeLockBtn" onclick="toggleWakeLock()">
+          Uključi zaslon (Wake Lock)
+        </button>
       </table>
       <div class="options-divider"></div>
       <table class="options-button" onclick="stageScoreReset();">
@@ -416,6 +435,7 @@
           </tr>
         </tbody>
       </table>
+
       <div class="options-filler"></div>
       <table width="100%" height="25%" class="full-size-font">
         <tbody>
@@ -884,6 +904,7 @@
         var usScore = us.points + us.contract;
         var themScore = them.points + them.contract;
 
+        // Ako ni jedan tim nije unio bodove, brišemo ili odustajemo:
         if (usScore === 0 && themScore === 0) {
           if (pointHistory.length === currentGameId) {
             cancelGame();
@@ -897,7 +918,11 @@
         var table = document.getElementById('history-table');
         var oldHtml = table.innerHTML;
 
+        // Provjerimo: jesmo li dodali NOVU ruku ili ispravljamo staru?
         if (pointHistory.length === currentGameId) {
+          // -------------------------
+          // 1) NOVA ruka
+          // -------------------------
           table.innerHTML =
             oldHtml +
             '<tr id="game-' +
@@ -909,38 +934,51 @@
             '</td><td>' +
             themScore +
             '</td></tr>\n';
+
+          // Dodaj u pointHistory
           pointHistory.push({ us: us, them: them });
+
+          // Zaključaj dealera i rotiraj samo kod nove ruke
+          if (!dealerLocked && currentDealer > 0) {
+            dealerLocked = true;
+          }
+          moveToNextDealer();
         } else {
+          // -------------------------
+          // 2) UREDI postojeću ruku
+          // -------------------------
+          // Samo mijenjamo HTML i pointHistory
           document.getElementById('game-' + currentGameId).innerHTML =
             '<td>' + usScore + '</td><td>' + themScore + '</td>';
+
           pointHistory[currentGameId].us = us;
           pointHistory[currentGameId].them = them;
+
+          // OVDJE NEMA 'dealerLocked = true;' NI 'moveToNextDealer();'
+          // Jer ispravljamo stari zapis, ne unosimo novi
         }
 
-        // Kad se završi unos partije, "zaključavamo" dealera (ako još nije)
-        // i rotiramo na sljedećeg:
-        if (!dealerLocked && currentDealer > 0) {
-          dealerLocked = true;
-        }
-        moveToNextDealer();
-
+        // Izračunaj novi zbroj
         var usTotal = 0;
         var themTotal = 0;
         pointHistory.forEach(function (h) {
           usTotal += h.us.points + h.us.contract;
           themTotal += h.them.points + h.them.contract;
         });
-
         updateScoreboard(usTotal, themTotal);
 
+        // Sakrij polje za unos
         document.getElementById('point-entry').hidden = true;
         document.getElementById('overview').hidden = false;
 
+        // Scrollaj povijest na dno
         var historyDiv = document.getElementById('history-div');
         historyDiv.scrollTop = historyDiv.scrollHeight;
 
+        // Spremi stanje (storage)
         storeState();
 
+        // Sakrij "drop-up" ako ga ima
         document.getElementById('player-name-edit').style.display = 'none';
       }
 
@@ -1219,6 +1257,56 @@
           var val = document.getElementById('player-name-input').value.trim();
           if (val) {
             setPlayerName(val);
+          }
+        }
+      }
+
+      //zaslon stalno ukljucen***************************
+      let wakeLock = null; // spremamo lock objekt
+      let isWakeLocked = false; // bilježimo je li zaslon "zaključan" ili ne
+
+      async function toggleWakeLock() {
+        // Gumb koji mijenjamo
+        const button = document.getElementById('wakeLockBtn');
+
+        // Provjera podrške:
+        if (!('wakeLock' in navigator)) {
+          alert('Wake Lock API nije dostupan u ovom pregledniku.');
+          return;
+        }
+
+        // Ako NEMAMO aktivan lock => zatraži ga
+        if (!isWakeLocked) {
+          try {
+            // Zatražimo "screen" lock
+            wakeLock = await navigator.wakeLock.request('screen');
+            isWakeLocked = true;
+            button.innerText = 'Isključi zaslon (Wake Lock aktivan)';
+            console.log('Zaslon je zaključan i neće se ugasiti.');
+
+            // Ako se lock automatski prekine (npr. prelazak u background),
+            // dobit ćemo "release" event:
+            wakeLock.addEventListener('release', () => {
+              console.log('WakeLock je prekinut (release).');
+              isWakeLocked = false;
+              button.innerText = 'Uključi zaslon (Wake Lock)';
+            });
+          } catch (err) {
+            console.error('Ne mogu uključiti zaslon (wake lock):', err);
+          }
+        }
+        // Ako VEĆ imamo lock => otpusti ga (zaslon se može ugasiti)
+        else {
+          try {
+            if (wakeLock) {
+              await wakeLock.release();
+              wakeLock = null;
+            }
+            isWakeLocked = false;
+            button.innerText = 'Uključi zaslon (Wake Lock)';
+            console.log('Zaslon više nije zaključan (može se ugasiti).');
+          } catch (err) {
+            console.error('Ne mogu isključiti zaslon (wake lock):', err);
           }
         }
       }
