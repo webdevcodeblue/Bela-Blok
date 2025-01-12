@@ -581,6 +581,14 @@
 
     <script type="text/javascript">
       /* -------------------- Original varijable (nije mijenjano) -------------------- */
+      // NOVO: Čuvamo imena igrača
+      var playerNames = {
+        1: 'Igrač',
+        2: 'Igrač',
+        3: 'Igrač',
+        4: 'Igrač',
+      };
+
       var selectedField = 'us-points';
       var leader = '';
       var currentGameId = 0;
@@ -746,6 +754,8 @@
           document.getElementById('them-wins').innerHTML
         );
         localStorage.setItem('targetScore', targetScore);
+        // NOVO: sad spremamo i imena:
+        localStorage.setItem('playerNames', JSON.stringify(playerNames));
       }
 
       function setPointsAndAdjustSize(id, value) {
@@ -1010,6 +1020,20 @@
           localStorage.getItem('usWins') || '0';
         document.getElementById('them-wins').innerHTML =
           localStorage.getItem('themWins') || '0';
+
+        // NOVO: učitaj playerNames iz localStorage
+        var storedNames = localStorage.getItem('playerNames');
+        if (storedNames) {
+          playerNames = JSON.parse(storedNames);
+        }
+
+        // NOVO: postavi imena i u HTML
+        for (var pid of [1, 2, 3, 4]) {
+          var cell = document.getElementById('player-' + pid);
+          if (cell && playerNames[pid]) {
+            cell.innerHTML = pid + ' ' + playerNames[pid];
+          }
+        }
       }
 
       function showOptions() {
@@ -1156,6 +1180,11 @@
         // Postavi u HTML, npr. "1 Kiki" => "1 NovoIme"
         var cell = document.getElementById('player-' + currentNameEdit);
         cell.innerHTML = currentNameEdit + ' ' + newName;
+        // NOVO: Spremi u nas "playerNames"
+        playerNames[currentNameEdit] = newName;
+
+        // NOVO: Sada opet spremi sve u localStorage
+        storeState();
 
         // Sakrij "drop-up"
         document.getElementById('player-name-edit').style.display = 'none';
