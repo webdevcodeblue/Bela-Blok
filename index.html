@@ -625,6 +625,8 @@
       var dealerOrder = [1, 2, 3, 4]; // redoslijed rotacije
 
       function selectDealer(playerId) {
+        // Ako je već unesena barem jedna runda, ne dozvoljavamo promjenu partnera
+        if (pointHistory.length > currentGameId) return;
         // Ako je dealerLocked = true, ne može se mijenjati
         if (dealerLocked) return;
 
@@ -1197,6 +1199,8 @@
 
       // Funkcija koja se zove u <td ... onclick="selectDealer(n); editPlayerName(n)">
       function editPlayerName(playerId) {
+        // Ako je već unesena barem jedna runda, ne dozvoljavamo promjenu imena
+        if (pointHistory.length > currentGameId) return;
         // Ako dealerLocked, NEĆEMO mijenjati ime (ili dozvoliš, po želji).
         // Ovdje NE radimo "return", jer možda želiš moći mjenjati i kad je locked.
         // Ako NE želiš dopustiti promjenu imena kada je locked, onda:
